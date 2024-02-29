@@ -1,16 +1,31 @@
 {
   "name": "ec_reactjs_nodejs",
+  "type": "module",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node backend/app.js",
+    "dev": "nodemon backend/app.js",
+    "pro": "nodemon backend/app.js",
+    "dev1": "set NODE_ENV=development && nodemon backend/app.js",
+    "pro1": "set NODE_ENV=production && nodemon backend/app.js",
+    "seeder": "node backend/seeders/seeder.js"
   },
   "author": "ANIT",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.6",
     "dotenv": "^16.4.1",
     "express": "^4.18.2",
-    "mongoose": "^8.1.1"
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.1.1",
+    "nodemailer": "^6.9.9",
+    "validator": "^13.11.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.3"
   }
 }
