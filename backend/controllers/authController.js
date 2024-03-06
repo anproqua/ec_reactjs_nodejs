@@ -6,6 +6,7 @@ import sendToken from "../utils/jwtToken.js";
 import sendEmail from '../utils/sendEmail.js';
 import crypto  from 'crypto';
 import { getResetPasswordTemplate } from "../utils/emailTemplate.js";
+import { delete_file, upload_file } from "../utils/cloudinary.js";
 // const cloudinary = require('cloudinary');
 // Register a user   => /api/v1/register
 export const registerUser = catchAsyncErrors(async (req, res, next) => {
@@ -133,24 +134,26 @@ export const getUserProfile = catchAsyncErrors(async (req, res, next) => {
 })
 
 
-// Update / Change password   =>  /api/v1/password/update
+// Update Password  =>  /api/v1/password/update
 export const updatePassword = catchAsyncErrors(async (req, res, next) => {
 
-    // vi models set thuoc tinh select cua password la false nen phai su dung select('password')
-    const user = await User.findById(req.user.id).select('+password');
-
-    // Check previous user password
-    const isMatched = await user.comparePassword(req.body.oldPassword)
-    if (!isMatched) {
-        return next(new ErrorHandler('Old password is incorrect'));
+     // vi models set thuoc tinh select cua password la false nen phai su dung select('password')
+    const user = await User.findById(req?.user?._id).select("+password");
+  
+    // Check the previous user password
+    const isPasswordMatched = await user.comparePassword(req.body.oldPassword);
+  
+    if (!isPasswordMatched) {
+      return next(new ErrorHandler("Old Password is incorrect", 400));
     }
-
+  
     user.password = req.body.password;
-    await user.save();
-
-    sendToken(user, 200, res)
-
-})
+    user.save();
+  
+    res.status(200).json({
+      success: true,
+    });
+  });
 
 
 // Update user profile   =>   /api/v1/me/update
@@ -257,5 +260,23 @@ export const deleteUser = catchAsyncErrors(async (req, res, next) => {
 
     res.status(200).json({
         success: true,
-    })
+    })    
 })
+
+// Upload user avatar   =>  /api/v1/me/upload_avatar
+export const uploadAvatar = catchAsyncErrors(async (req, res, next) => {
+    const avatarResponse = await upload_file(req.body.avatar, "shopit/avatars");
+  
+    // Remove previous avatar
+    if (req?.user?.avatar?.url) {
+      await delete_file(req?.user?.avatar?.public_id);
+    }
+  
+    const user = await User.findByIdAndUpdate(req?.user?._id, {
+      avatar: avatarResponse,
+    });
+  
+    res.status(200).json({
+      user,
+    });
+  });

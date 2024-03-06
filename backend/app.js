@@ -19,8 +19,8 @@ process.on("uncaughtException", (err)=>{
 // connect datbase
 connectDatabase();
 
-
-app.use(express.json());
+// limit: 50mb để giải quyết up file lớn
+app.use(express.json({ limit: '50mb'}));
 app.use(cookieParser());
 // use error middleware
 app.use(errorsMiddleware);

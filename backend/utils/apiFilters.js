@@ -19,7 +19,8 @@ class APIFilters {
     filters(){
         const queryCopy = { ...this.queryStr};
        // filter remove 
-       const fieldsToRemove = ["keyword"];
+       // xoa1 cac tham so tren url khong co trong database moi find duoc
+       const fieldsToRemove = ["keyword","page"];
        fieldsToRemove.forEach((el)=>delete queryCopy[el]);
 
        // filter for prices, rate
@@ -29,10 +30,11 @@ class APIFilters {
        queryStr = queryStr.replace(/\b(gt|gte|lt|lte)\b/g, (match) => `$${match}`);
 
        console.log("===================");
-       console.log(queryStr);
+       console.log("filters:"+queryStr);
        console.log("===================");
       // this.query = this.query.find(queryCopy);
       this.query = this.query.find(JSON.parse(queryStr));
+      console.log("Products in filter:" + this.query);
        return this;
     };
 //resPerPage : so item tren 1 trang

@@ -5,37 +5,43 @@ import catchAsyncErrors from '../middlewares/catchAsyncErrors.js';
 // show product => /api/v1/Product
 export const getProducts = catchAsyncErrors(async(req,res,next) => {
 
-    //return next(new ErrorHandler('No Order found with this ID', 404))
-    // pagination
+    // const resPerPage = 4;
+    // let  apiFilters = new APIFilters(Product.find(),req.query);   
+   
+    // if(req?.query!=""){
+    //    // if(req?.query?.keyword){
+    //         apiFilters = new APIFilters(Product.find(),req.query).search();
+          
+           
+    //    // }
+    // }  
+    // let products = await apiFilters.query; // danh sach product tong
+    // let filteredProductsCount = products.length;
+    // apiFilters = apiFilters.pagination(resPerPage);  
+    //  products = await apiFilters.query.clone();
+    //  //.clone de fix loi  Query was already executed: Product.find({})
+    //  // danh sach product phan trang
+   
+    // res.status(200).json({
+    //     filteredProductsCount,
+    //     products,
+    //     resPerPage
+    // }); 
+
     const resPerPage = 4;
-    const apiFilters = new APIFilters(Product,req.query).pagination(resPerPage);
-    const products = await apiFilters.query; 
-    let filterProductCount = products.length;
-    res.status(200).json({
-        filterProductCount,
-        products,
-        resPerPage
-    }); 
-    //const products = await Product.find();
-    // search theo keyword
-    /*
-    const apiFilters = new APIFilters(Product,req.query).search();
+    const apiFilters = new APIFilters(Product, req.query).search().filters();
+  
     let products = await apiFilters.query;
-    let filterProductCount = products.length;
+    let filteredProductsCount = products.length;
+  
+    apiFilters.pagination(resPerPage);
+    products = await apiFilters.query.clone();
+  
     res.status(200).json({
-        filterProductCount,
-        products,
+      resPerPage,
+      filteredProductsCount,
+      products,
     });
-    */
-    // filters    
-   /* const apiFilters = new APIFilters(Product,req.query).filters();
-    let products = await apiFilters.query;
-    let filterProductCount = products.length;
-    res.status(200).json({
-        filterProductCount,
-        products,
-    });   */
-    
     
 
 });
