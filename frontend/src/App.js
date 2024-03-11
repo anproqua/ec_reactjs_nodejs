@@ -13,6 +13,12 @@ import UpdateProfile from './components/user/UpdateProfile.js';
 import ProtectedRoute from './components/auth/ProtectedRoute.js';
 import UploadAvatar from './components/user/UploadAvatar.jsx';
 import UpdatePassword from './components/user/UpdatePassword.jsx';
+import ForgotPassword from './components/auth/ForgotPassword.jsx';
+import ResetPassword from './components/auth/ResetPassword.jsx';
+import Cart from './components/cart/Cart.jsx';
+import Shipping from './components/cart/Shipping.jsx';
+import ConfirmOrder from './components/cart/ConfirmOrder.jsx';
+import PaymentMethod from './components/cart/PaymentMethod.jsx';
 function App() {
   return (
     // <div className="App">
@@ -37,6 +43,14 @@ function App() {
            <Route path='/me/update_password' element={<UpdatePassword />} />
            <Route path='/me/upload_avatar' element={<UploadAvatar />} />
           <Route path='/me/update_profile' element={<UpdateProfile />} />
+          <Route path='/password/forgot' element={<ForgotPassword />} />
+          <Route path='/password/reset/:token' element={<ResetPassword />} />
+          <Route path='/me/update_password' element={<UpdatePassword />} />
+
+          <Route path='/cart' element={<Cart />} />
+          <Route path='/shipping' element={<Shipping />} />
+          <Route path='/confirm_order' element={<ConfirmOrder />} />
+          <Route path='/payment_method' element={<PaymentMethod />} />
           
         </Routes>
         <Footer />

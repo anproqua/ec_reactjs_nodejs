@@ -29,3 +29,5 @@ export const getPriceQueryParams = (searchParams, key, value) => {
       totalPrice,
     };
   };
+
+  

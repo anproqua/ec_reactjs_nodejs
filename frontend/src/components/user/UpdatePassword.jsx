@@ -15,6 +15,7 @@ const UpdatePassword = () => {
     useUpdatePasswordMutation();
 
   useEffect(() => {
+    console.log("error: "+ error?.data);
     if (error) {
       toast.error(error?.data?.message);
     }

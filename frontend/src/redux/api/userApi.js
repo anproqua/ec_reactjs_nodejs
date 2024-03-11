@@ -54,9 +54,29 @@ export const userApi = createApi({
                 }
             },          
         }),
+        forgotPassword: builder.mutation({
+            query(body) {
+              return {
+                url: "/password/forgot",
+                method: "POST",
+                body,
+              };
+            },
+          }),
+          resetPassword: builder.mutation({
+            query({ token, body }) {
+              return {
+                url: `/password/reset/${token}`,
+                method: "PUT",
+                body,
+              };
+            },
+          }),
 
     }),
     //phai viet dung cu phap viết (params) => {"/products"} là sai
 });
 // useGetProductsAllQuery tu hệ thống tạo ra tên theo endpoints
-export const { useGetMeQuery, useUpdateProfileMutation, useUploadAvatarMutation, useUpdatePasswordMutation } = userApi;
+export const { useGetMeQuery, useUpdateProfileMutation, 
+    useUploadAvatarMutation, useUpdatePasswordMutation,
+useForgotPasswordMutation,useResetPasswordMutation } = userApi;
