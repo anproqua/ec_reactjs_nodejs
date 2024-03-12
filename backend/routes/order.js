@@ -16,7 +16,7 @@ import { isAuthenticateUser, authorizeRoles } from '../middlewares/auth.js';
 router.route('/orders/new').post(isAuthenticateUser, newOrder);
 
 router.route('/order/:id').get(isAuthenticateUser, getSingleOrder);
-router.route('/orders/me').get(isAuthenticateUser, myOrders);
+router.route('/me/orders').get(isAuthenticateUser, myOrders);
 
 router.route('/admin/orders/').get(isAuthenticateUser, authorizeRoles('admin'), allOrders);
 router.route('/admin/order/:id')
